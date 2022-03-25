@@ -197,22 +197,82 @@ class detailMusiqueState extends State<detailMusique>{
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Début"),
-            Text("Durée totale"),
+            Text(position.toString().substring(2,7)),
+            Text(duree.toString().substring(2,7)),
 
           ],
         ),
 
         Slider(
-            value: time,
+          max: (duree == null)?0.0:duree.inSeconds.toDouble(),
+            min: 0.0,
+            value: position.inSeconds.toDouble(),
             activeColor: Colors.red,
             inactiveColor: Colors.grey,
             onChanged: (value){
               setState(() {
-                time = value;
+                Duration interval = Duration(seconds: value.toInt());
+                position = interval;
+                audioPlayer.play(widget.morceau.path,position: position,volume: volumeSound);
+
+
               });
             }
-        )
+        ),
+
+        //Ajouter les boutons de volume
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //baisser le volume
+            IconButton(onPressed: (){
+              if(volumeSound-0.1<=0){
+                setState(() {
+                  volumeSound = 0;
+                  audioPlayer.setVolume(volumeSound);
+                });
+              }
+              else
+                {
+                  setState(() {
+                    volumeSound = volumeSound-0.1;
+                    audioPlayer.setVolume(volumeSound);
+
+                  });
+                }
+
+            },
+                icon: Icon(Icons.volume_down_rounded)
+            ),
+
+            //Augmenter
+            IconButton(
+                onPressed: (){
+                  if(volumeSound+0.1>=1){
+                    setState(() {
+                      volumeSound = 1;
+                      audioPlayer.setVolume(volumeSound);
+                    });
+                  }
+                  else
+                    {
+                      setState(() {
+                        volumeSound = volumeSound+0.1;
+                        audioPlayer.setVolume(volumeSound);
+                      });
+                    }
+
+                },
+                icon: Icon(Icons.volume_up_rounded)
+            ),
+
+          ],
+        ),
+
+
+        ///
+
+
 
 
         //Slider
