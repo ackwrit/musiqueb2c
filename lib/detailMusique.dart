@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:animationb2c/model/musique.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class detailMusique extends StatefulWidget{
@@ -13,7 +16,70 @@ class detailMusique extends StatefulWidget{
 }
 
 class detailMusiqueState extends State<detailMusique>{
+  //Variable
   double time =0;
+  statut lecture = statut.stopped;
+  Duration position = Duration(seconds: 0);
+  Duration duree = Duration(seconds: 0);
+  double volumeSound = 0.5;
+  late StreamSubscription positionStream;
+  late StreamSubscription stateStream;
+  AudioPlayer audioPlayer = AudioPlayer();
+
+
+
+
+
+
+  //
+
+
+
+
+
+
+  //Méthode
+ configuration(){
+   audioPlayer.setUrl(widget.morceau.path);
+   positionStream = audioPlayer.onAudioPositionChanged.listen((event) {
+     setState(() {
+       position = event;
+     });
+   });
+
+   audioPlayer.onDurationChanged.listen((event) {
+     setState(() {
+       duree = event;
+     });
+   });
+
+   stateStream = audioPlayer.onPlayerStateChanged.listen((event) {
+     if(event == statut.playing){
+       setState(() async {
+         duree = audioPlayer.getDuration() as Duration;
+       });
+     }
+     else if(event == statut.stopped){
+       setState(() {
+         lecture = statut.stopped;
+       });
+     }
+   },
+     onError: (message){
+     setState(() {
+       lecture = statut.stopped;
+       position = Duration(seconds: 0);
+       duree = Duration(seconds: 0);
+     });
+     }
+   );
+
+
+ }
+
+
+
+  ///
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -98,4 +164,13 @@ class detailMusiqueState extends State<detailMusique>{
     );
   }
 
+}
+
+
+enum statut{
+  playing,
+  stopped,
+  paused,
+  forward,
+  rewind,
 }

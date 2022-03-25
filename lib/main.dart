@@ -51,10 +51,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Musique> allMocceaux = [
-    Musique(title: "Big Boss", singer: "Laura", type_music: "Rap", path: "assets/songs/03.ThePyramids.mp3"),
-    Musique(title: "Lord", singer: "Djino", type_music: "Electro", path: "assets/songs/11.Suspects.mp3",image:"assets/image/UxqjmuipUqmeiVSd4xHZO_4chSw.jpg" ),
-    Musique(title: "Poreaux", singer: "Leslie", type_music: "Rnb", path: "assets/songs/18.LetPoirotWork.mp3",image: "assets/image/wnrv0DmECg_mmOv6p9HlqEIBdzk.jpg"),
-    Musique(title: "Iphone", singer: "Claude", type_music: "Rap", path: "assets/songs/23.Perhaps.mp3",album: "My Best Of")
+    Musique(title: "Big Boss", singer: "Laura", type_music: "Rap", path: "https://firebasestorage.googleapis.com/v0/b/projetclassb2c3.appspot.com/o/09.AbuSimbel.mp3?alt=media&token=30e1026c-e4ce-48ab-b860-c1539fa4130a"),
+    Musique(title: "Lord", singer: "Djino", type_music: "Electro", path: "https://firebasestorage.googleapis.com/v0/b/projetclassb2c3.appspot.com/o/14.Alibi.mp3?alt=media&token=d09610c6-3f02-4d29-b263-a0dba8b491dd",image:"assets/image/UxqjmuipUqmeiVSd4xHZO_4chSw.jpg" ),
+    Musique(title: "Poreaux", singer: "Leslie", type_music: "Rnb", path: "https://firebasestorage.googleapis.com/v0/b/projetclassb2c3.appspot.com/o/16.Inheritance.mp3?alt=media&token=cd1d2a45-3b12-4331-83b2-a786b167f399",image: "assets/image/wnrv0DmECg_mmOv6p9HlqEIBdzk.jpg"),
+    Musique(title: "Iphone", singer: "Claude", type_music: "Rap", path: "https://firebasestorage.googleapis.com/v0/b/projetclassb2c3.appspot.com/o/21.%20IWasn'tThinking.mp3?alt=media&token=b7b3211e-08c0-4456-9bc7-0ba56d8cdde5",album: "My Best Of")
   ];
 
 
