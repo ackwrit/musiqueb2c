@@ -89,7 +89,12 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: Colors.red,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/image/Warrior-Girl-fantasy-23124363-1024-768.jpg"),
+            fit: BoxFit.fill
+          )
+        ),
       ),
     );
   }

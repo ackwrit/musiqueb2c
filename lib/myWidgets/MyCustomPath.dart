@@ -6,11 +6,10 @@ class MyCustomPath extends CustomClipper<Path>{
     // TODO: implement getClip
     Path path = Path();
     path.lineTo(0, size.height/2);
-    path.lineTo(size.width, 0);
+    path.quadraticBezierTo(size.width/4, size.height/2, size.width/3, size.height/3);
+    path.quadraticBezierTo(size.width, size.height/4, size.width, 0);
+
     path.close();
-
-
-
     return path;
   }
 
