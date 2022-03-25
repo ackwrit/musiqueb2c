@@ -1,5 +1,6 @@
 import 'package:animationb2c/detailMusique.dart';
 import 'package:animationb2c/model/musique.dart';
+import 'package:animationb2c/myWidgets/MyCustomPath.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -67,15 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: bodyPage(),
-      ),
+
+      body:Page(),
+
 
       backgroundColor: Colors.green,
 
@@ -85,22 +81,54 @@ class _MyHomePageState extends State<MyHomePage> {
 
   }
 
+
+
+  Widget fondEcran(){
+    return ClipPath(
+      clipper: MyCustomPath(),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: Colors.red,
+      ),
+    );
+  }
+
+
+  Widget Page(){
+    return Stack(
+      children: [
+        fondEcran(),
+        Container(
+          padding: EdgeInsets.all(10),
+          child:  bodyPage(),
+        ),
+
+      ],
+    );
+  }
+
   Widget bodyPage(){
     return GridView.builder(
       itemCount: allMocceaux.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 20,mainAxisSpacing: 10),
         itemBuilder: (context,index){
           return InkWell(
-            child:  Container(
-              height: 300,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  image: DecorationImage(
-                      image: (allMocceaux[index].image==null)?AssetImage("assets/image/indispo.jpeg"):AssetImage(allMocceaux[index].image!),
-                      fit: BoxFit.fill
-                  )
+            child: Hero(
+              tag: allMocceaux[index].title,
+              child:  Container(
+                height: 300,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(
+                        image: (allMocceaux[index].image==null)?AssetImage("assets/image/indispo.jpeg"):AssetImage(allMocceaux[index].image!),
+                        fit: BoxFit.fill
+                    )
+                ),
               ),
             ),
+
+
             onTap: (){
               Navigator.push(context, MaterialPageRoute(
                   builder: (context){

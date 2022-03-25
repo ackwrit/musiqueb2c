@@ -124,17 +124,23 @@ class detailMusiqueState extends State<detailMusique>{
     return Column(
       children: [
         //Image
-        Container(
-          height: 300,
-          width: 400,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(
-              image: (widget.morceau.image==null)?AssetImage("assets/image/indispo.jpeg"):AssetImage(widget.morceau.image!),
-              fit: BoxFit.fill
-            )
+        Hero(
+          tag: widget.morceau.title,
+          child: AnimatedContainer(
+            duration: Duration(seconds: 5),
+            height: (lecture == statut.stopped)?150:300,
+            width: (lecture== statut.stopped)?150:400,
+            curve: Curves.bounceInOut,
+            decoration: BoxDecoration(
+                borderRadius: (lecture == statut.stopped)?BorderRadius.circular(0):BorderRadius.circular(20),
+                image: DecorationImage(
+                    image: (widget.morceau.image==null)?AssetImage("assets/image/indispo.jpeg"):AssetImage(widget.morceau.image!),
+                    fit: BoxFit.fill
+                )
+            ),
           ),
         ),
+
 
         //Titre - Album,
         Text("${widget.morceau.title} - ${widget.morceau.album}",style: TextStyle(fontSize: 35,fontWeight: FontWeight.bold),),
