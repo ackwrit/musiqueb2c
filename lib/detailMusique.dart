@@ -39,6 +39,8 @@ class detailMusiqueState extends State<detailMusique>{
 
 
   //Méthode
+
+  //Fonction de configuration
  configuration(){
    audioPlayer.setUrl(widget.morceau.path);
    positionStream = audioPlayer.onAudioPositionChanged.listen((event) {
@@ -76,10 +78,30 @@ class detailMusiqueState extends State<detailMusique>{
 
 
  }
+ ///
+  ///
+  ///
+  // Fonction de lecture de la musique
+  Future play () async{
+    await audioPlayer.play(widget.morceau.path,position: position,volume: volumeSound);
+  }
+  /////////////
 
+
+
+  ///////Fonction de pause de la musique
+  Future pause() async{
+   await audioPlayer.pause();
+  }
 
 
   ///
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    configuration();
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -125,24 +147,59 @@ class detailMusiqueState extends State<detailMusique>{
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            //Icone pour le recul de la musique
             IconButton(
                 onPressed: (){
 
                 },
                 icon: Icon(Icons.fast_rewind_rounded,size: 30,)
             ),
-            IconButton(
+
+            /////////////////////////
+
+            //Icone du Milieu
+            (lecture == statut.stopped)?IconButton(
                 onPressed: (){
+                  setState(() {
+                    lecture = statut.paused;
+                    play();
+                  });
 
                 },
                 icon: Icon(Icons.play_arrow_rounded,size: 40,)
+            ): IconButton(
+                onPressed: (){
+                  setState(() {
+                    lecture = statut.stopped;
+                    pause();
+                  });
+
+
+                },
+                icon: Icon(Icons.pause,size: 40,)
             ),
+
+
+            ///////////
+
+
+            //Icon pour avance rapide
             IconButton(
                 onPressed: (){
 
                 },
                 icon: Icon(Icons.fast_forward_rounded,size: 30,)
             ),
+            //////////////
+          ],
+        ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Début"),
+            Text("Durée totale"),
+
           ],
         ),
 
