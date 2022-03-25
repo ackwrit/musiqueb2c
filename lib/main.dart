@@ -1,3 +1,5 @@
+import 'package:splashscreen/splashscreen.dart';
+
 import 'package:animationb2c/detailMusique.dart';
 import 'package:animationb2c/model/musique.dart';
 import 'package:animationb2c/myWidgets/MyCustomPath.dart';
@@ -51,13 +53,28 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin{
+
+  late AnimationController controller;
+  late Animation animation;
+
   List<Musique> allMocceaux = [
     Musique(title: "Big Boss", singer: "Laura", type_music: "Rap", path: "https://firebasestorage.googleapis.com/v0/b/projetclassb2c3.appspot.com/o/09.AbuSimbel.mp3?alt=media&token=30e1026c-e4ce-48ab-b860-c1539fa4130a"),
     Musique(title: "Lord", singer: "Djino", type_music: "Electro", path: "https://firebasestorage.googleapis.com/v0/b/projetclassb2c3.appspot.com/o/14.Alibi.mp3?alt=media&token=d09610c6-3f02-4d29-b263-a0dba8b491dd",image:"assets/image/UxqjmuipUqmeiVSd4xHZO_4chSw.jpg" ),
     Musique(title: "Poreaux", singer: "Leslie", type_music: "Rnb", path: "https://firebasestorage.googleapis.com/v0/b/projetclassb2c3.appspot.com/o/16.Inheritance.mp3?alt=media&token=cd1d2a45-3b12-4331-83b2-a786b167f399",image: "assets/image/wnrv0DmECg_mmOv6p9HlqEIBdzk.jpg"),
     Musique(title: "Iphone", singer: "Claude", type_music: "Rap", path: "https://firebasestorage.googleapis.com/v0/b/projetclassb2c3.appspot.com/o/21.%20IWasn'tThinking.mp3?alt=media&token=b7b3211e-08c0-4456-9bc7-0ba56d8cdde5",album: "My Best Of")
   ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = new AnimationController(
+        duration: Duration(seconds: 2),
+        vsync: this,
+    )..repeat();
+
+    animation = Tween<double>(begin: 0,end:1).animate(controller);
+  }
 
 
   @override
@@ -68,14 +85,24 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
+    return SplashScreen(
+      seconds: 14,
+      navigateAfterSeconds: Scaffold(
 
-      body:Page(),
+        body:Page(),
 
 
-      backgroundColor: Colors.green,
+        backgroundColor: Colors.green,
 
+      ),
+      backgroundColor: Colors.red,
     );
+
+
+
+
+
+
 
 
 
@@ -121,16 +148,29 @@ class _MyHomePageState extends State<MyHomePage> {
           return InkWell(
             child: Hero(
               tag: allMocceaux[index].title,
-              child:  Container(
-                height: 300,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                        image: (allMocceaux[index].image==null)?AssetImage("assets/image/indispo.jpeg"):AssetImage(allMocceaux[index].image!),
-                        fit: BoxFit.fill
-                    )
+              child:  AnimatedBuilder(
+                animation: animation,
+                builder: (context,child){
+                  return Transform.scale(
+                    scale: animation.value,
+                    child: child,
+                  );
+
+                },
+                child: Container(
+                  height: 300,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      image: DecorationImage(
+                          image: (allMocceaux[index].image==null)?AssetImage("assets/image/indispo.jpeg"):AssetImage(allMocceaux[index].image!),
+                          fit: BoxFit.fill
+                      )
+                  ),
                 ),
               ),
+
+
+
             ),
 
 
